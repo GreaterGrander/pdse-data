@@ -15,9 +15,6 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
-        run: pip install pytrends
-
       - name: Run scraper
         run: python scrape_trends.py
 
@@ -26,5 +23,5 @@ jobs:
           git config user.name "pdse-bot"
           git config user.email "actions@github.com"
           git add data.json
-          git diff --quiet --cached || git commit -m "Update trends data"
+          git diff --quiet --cached || git commit -m "Update pageview data"
           git push
