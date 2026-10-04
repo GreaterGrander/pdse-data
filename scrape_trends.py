@@ -1,50 +1,47 @@
 #!/usr/bin/env python3
 """
-Scrapes Google Trends interest scores for a list of public-domain characters,
-rescales every batch of 5 onto one consistent 0-100 scale using a shared
-anchor term, and writes/updates data.json in the repo root.
+Pulls real daily Wikipedia pageview counts for a list of public-domain
+characters from the official, free, keyless Wikimedia Pageviews API, and
+writes/updates data.json in the repo root.
 
-Run manually:  pip install pytrends  &&  python scrape_trends.py
-Run on a schedule via .github/workflows/update-trends.yml
-
-If pytrends throws errors (Google changes its backend occasionally), swap to:
-  pip install pytrends-modern
-and change the import below to: from pytrends_modern import TrendReq
+No API key, no pip installs, no rate-limit workarounds needed -- just
+Python's standard library. This is the MVP-simple version.
 """
 
 import json
+import math
 import time
-import sys
+import urllib.parse
+import urllib.request
+from datetime import datetime, timedelta
 from pathlib import Path
 
-try:
-    from pytrends.request import TrendReq
-except ImportError:
-    sys.exit("Install pytrends first: pip install pytrends")
-
 DATA_FILE = Path(__file__).parent / "data.json"
-HISTORY_LENGTH = 14          # keep the last N data points per character
-ANCHOR = "Sherlock Holmes"   # steady, well-known term used to rescale batches
-GEO = "US"                   # set to "" for worldwide
-SLEEP_BETWEEN_REQUESTS = 8   # seconds between requests, be polite to avoid 429s
+HISTORY_DAYS = 14   # how many days of daily pageviews to pull per character
 
-# (symbol, exact search term) -- add more rows here to scale past 18 characters.
-# Keep symbols unique and under 5 chars to match the board's ticker style.
+# Wikimedia asks every API client to identify itself with a real User-Agent.
+# Put a real contact (your site URL or email) here before running.
+USER_AGENT = "PDSE-Bot/1.0 (greaterandgrander@gmail.com)"
+
+# (symbol, exact Wikipedia article title) -- add more rows to scale past 18.
+# Titles must match the article exactly as it appears in the en.wikipedia.org
+# URL (with spaces instead of underscores). If a title is wrong, that row
+# just falls back to a flat line instead of breaking the whole run.
 CHARACTERS = [
     ("SHLK", "Sherlock Holmes"),
     ("DRAC", "Dracula"),
     ("FRNK", "Frankenstein's monster"),
-    ("ALIC", "Alice in Wonderland"),
+    ("ALIC", "Alice (Wonderland)"),
     ("PETR", "Peter Pan"),
     ("ROBH", "Robin Hood"),
     ("ZORR", "Zorro"),
     ("TARZ", "Tarzan"),
-    ("HYDE", "Mr Hyde"),
+    ("HYDE", "Mr. Hyde"),
     ("SNOW", "Snow White"),
     ("CNDR", "Cinderella"),
     ("PINO", "Pinocchio"),
     ("QUAS", "Quasimodo"),
-    ("PHAN", "Phantom of the Opera"),
+    ("PHAN", "The Phantom of the Opera (character)"),
     ("AHAB", "Captain Ahab"),
     ("HOOK", "Captain Hook"),
     ("MHAT", "Mad Hatter"),
@@ -52,65 +49,43 @@ CHARACTERS = [
 ]
 
 
-def chunks(lst, size):
-    for i in range(0, len(lst), size):
-        yield lst[i:i + size]
+def fetch_pageviews(article):
+    """Returns a list of daily view counts for the last HISTORY_DAYS days."""
+    end = datetime.utcnow().date() - timedelta(days=1)  # yesterday (today is incomplete)
+    start = end - timedelta(days=HISTORY_DAYS - 1)
+    title = urllib.parse.quote(article.replace(" ", "_"), safe="")
+    url = (
+        "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/"
+        f"en.wikipedia/all-access/user/{title}/daily/"
+        f"{start.strftime('%Y%m%d')}/{end.strftime('%Y%m%d')}"
+    )
+    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+    try:
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            data = json.load(resp)
+        return [item["views"] for item in data.get("items", [])]
+    except Exception as e:
+        print(f"Failed to fetch '{article}': {e}")
+        return []
 
 
-def fetch_scores():
-    pytrends = TrendReq(hl="en-US", tz=360)
-    others = [c for c in CHARACTERS if c[1] != ANCHOR]
-    batches = list(chunks(others, 4))  # 4 others + anchor = 5 terms per request
-
-    reference_anchor_value = None
-    scores = {}
-
-    for batch in batches:
-        terms = [ANCHOR] + [name for _, name in batch]
-        pytrends.build_payload(terms, timeframe="now 7-d", geo=GEO)
-        df = pytrends.interest_over_time()
-        if df.empty:
-            print(f"No data for batch: {terms}")
-            continue
-
-        latest = df.iloc[-1]
-        anchor_value = max(latest[ANCHOR], 1)  # avoid divide-by-zero
-
-        if reference_anchor_value is None:
-            reference_anchor_value = anchor_value
-            scale = 1.0
-        else:
-            scale = reference_anchor_value / anchor_value
-
-        for symbol, name in batch:
-            scores[symbol] = round(latest[name] * scale, 1)
-
-        time.sleep(SLEEP_BETWEEN_REQUESTS)
-
-    anchor_symbol = next(sym for sym, name in CHARACTERS if name == ANCHOR)
-    scores[anchor_symbol] = round(reference_anchor_value, 1) if reference_anchor_value else 0
-
-    return scores
+def to_index(views):
+    """Compresses raw daily view counts onto a 0-100-ish scale so the
+    board's existing price formula (unchanged) still looks right."""
+    return min(99, round(math.sqrt(max(views, 0))))
 
 
-def update_history(scores):
-    if DATA_FILE.exists():
-        existing = json.loads(DATA_FILE.read_text())
-        history = {row[0]: row[2] for row in existing}
-    else:
-        history = {}
-
+def main():
     out = []
-    for symbol, name in CHARACTERS:
-        hist = history.get(symbol, [])
-        hist.append(scores.get(symbol, hist[-1] if hist else 0))
-        hist = hist[-HISTORY_LENGTH:]
-        out.append([symbol, name, hist])
+    for symbol, article in CHARACTERS:
+        raw = fetch_pageviews(article)
+        hist = [to_index(v) for v in raw] if raw else [10] * HISTORY_DAYS
+        out.append([symbol, article, hist])
+        time.sleep(0.5)  # polite pause; nowhere near Wikimedia's limits
 
     DATA_FILE.write_text(json.dumps(out, indent=2))
     print(f"Wrote {len(out)} characters to {DATA_FILE}")
 
 
 if __name__ == "__main__":
-    scores = fetch_scores()
-    update_history(scores)
+    main()
