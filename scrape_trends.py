@@ -46,6 +46,7 @@ CHARACTERS = [
     ("HOOK", "Captain Hook"),
     ("MHAT", "Mad Hatter"),
     ("DQUI", "Don Quixote"),
+    ("ATLA", "Atlas (mythology)"),
 ]
 
 
