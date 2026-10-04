@@ -1,0 +1,30 @@
+name: Update Trends Data
+
+on:
+  schedule:
+    - cron: "0 13 * * *"   # runs once daily at 13:00 UTC; edit to taste
+  workflow_dispatch: {}     # adds a "Run workflow" button for manual testing
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install pytrends
+
+      - name: Run scraper
+        run: python scrape_trends.py
+
+      - name: Commit updated data
+        run: |
+          git config user.name "pdse-bot"
+          git config user.email "actions@github.com"
+          git add data.json
+          git diff --quiet --cached || git commit -m "Update trends data"
+          git push
