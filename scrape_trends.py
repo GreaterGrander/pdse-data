@@ -31,6 +31,7 @@ CHARACTERS = [
     ("SHLK", "Sherlock Holmes"),
     ("DRAC", "Dracula"),
     ("FRNK", "Frankenstein's monster"),
+    ("DRFR", "Victor Frankenstein"),
     ("ALIC", "Alice (Wonderland)"),
     ("PETR", "Peter Pan"),
     ("ROBH", "Robin Hood"),
@@ -47,6 +48,19 @@ CHARACTERS = [
     ("MHAT", "Mad Hatter"),
     ("DQUI", "Don Quixote"),
     ("ATLA", "Atlas (mythology)"),
+    ("ELBE", "Elizabeth Bennet"),
+    ("MRDA", "Mr. Darcy"),
+    ("BENN", "Bennet family"),
+    ("GEWI", "George Wickham"),
+    ("WICO", "Mr William Collins"),
+    ("LCDB", "Lady Catherine de Bourgh"),
+    ("ISHM", "Ishmael (Moby-Dick)"),
+    ("MOBY", "Moby_Dick_(whale)"),
+    ("WHIT", "White Rabbit"),
+    ("CATP", "Caterpillar (Alice's Adventures in Wonderland)"),
+    ("CHES", "Cheshire Cat"),
+    ("HARE", "March Hare"),
+    ("QUEN", "Queen of Hearts (Alice's Adventures in Wonderland)"),
 ]
 
 
