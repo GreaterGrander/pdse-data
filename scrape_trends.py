@@ -42,7 +42,7 @@ CHARACTERS = [
     ("CNDR", "Cinderella"),
     ("PINO", "Pinocchio"),
     ("QUAS", "Quasimodo"),
-    ("PHAN", "The Phantom of the Opera (character)"),
+    ("PHAN", "Erik (The Phantom of the Opera)"),
     ("AHAB", "Captain Ahab"),
     ("HOOK", "Captain Hook"),
     ("MHAT", "Mad Hatter"),
