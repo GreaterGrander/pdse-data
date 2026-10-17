@@ -61,6 +61,10 @@ CHARACTERS = [
     ("CHES", "Cheshire Cat"),
     ("HARE", "March Hare"),
     ("QUEN", "Queen of Hearts (Alice's Adventures in Wonderland)"),
+    ("SACL", "Santa Claus"),
+    ("MSCL", "Mrs. Claus"),
+    ("EBSC", "Ebenezer Scrooge"),
+    ("KRMP", "Krampus"),
 ]
 
 
