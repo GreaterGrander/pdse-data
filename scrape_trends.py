@@ -224,7 +224,6 @@ CHARACTERS = [
     ("FENR", "Fenrir"),
  
     # --- H.G. Wells ---
-    ("TMCH", "The Time Machine"),
     ("MORL", "Morlock"),
  
     # --- Death ---
