@@ -198,7 +198,7 @@ CHARACTERS = [
  
     # --- The Three Musketeers ---
     ("DART", "D'Artagnan"),
-    ("ATHO", "Athos (musketeer)"),  # verify
+    ("ATHO", "Athos (character)"),
     ("PORT", "Porthos"),  # verify
     ("ARAM", "Aramis"),  # verify
     ("MILA", "Milady de Winter"),
