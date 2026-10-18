@@ -28,6 +28,7 @@ USER_AGENT = "PDSE-Bot/1.0 (greaterandgrander@gmail.com)"
 # URL (with spaces instead of underscores). If a title is wrong, that row
 # just falls back to a flat line instead of breaking the whole run.
 CHARACTERS = [
+    # --- Original board ---
     ("SHLK", "Sherlock Holmes"),
     ("DRAC", "Dracula"),
     ("FRNK", "Frankenstein's monster"),
@@ -52,7 +53,7 @@ CHARACTERS = [
     ("MRDA", "Mr. Darcy"),
     ("BENN", "Bennet family"),
     ("GEWI", "George Wickham"),
-    ("WICO", "Mr William Collins"),
+    ("WICO", "Mr William Collins"),  # verify (may be "Mr. Collins")
     ("LCDB", "Lady Catherine de Bourgh"),
     ("ISHM", "Ishmael (Moby-Dick)"),
     ("MOBY", "Moby_Dick_(whale)"),
@@ -65,6 +66,202 @@ CHARACTERS = [
     ("MSCL", "Mrs. Claus"),
     ("EBSC", "Ebenezer Scrooge"),
     ("KRMP", "Krampus"),
+ 
+    # --- Robin Hood ---
+    ("FTUC", "Friar Tuck"),
+    ("SHRF", "Sheriff of Nottingham"),
+    ("LJHN", "Little John"),
+    ("MARN", "Maid Marian"),
+    ("WSCR", "Will Scarlet"),
+    ("GISB", "Guy of Gisborne"),
+ 
+    # --- Dracula ---
+    ("MINA", "Mina Harker"),
+    ("HELS", "Abraham Van Helsing"),
+    ("JHRK", "Jonathan Harker"),
+    ("RNFD", "Renfield"),  # verify
+    ("LUCY", "Lucy Westenra"),
+ 
+    # --- Sherlock Holmes ---
+    ("MORI", "Professor Moriarty"),
+    ("WATS", "Dr. Watson"),
+    ("ADLR", "Irene Adler"),
+    ("MYCR", "Mycroft Holmes"),
+    ("LEST", "Inspector Lestrade"),
+    ("HUDS", "Mrs. Hudson"),
+ 
+    # --- Frankenstein ---
+    ("BRDE", "Bride of Frankenstein"),  # the 1935 film article; character page title unverified
+    ("LAVZ", "Elizabeth Lavenza"),  # verify
+ 
+    # --- Wizard of Oz ---
+    ("DORO", "Dorothy Gale"),
+    ("SCRE", "Scarecrow (Oz)"),
+    ("TINW", "Tin Woodman"),
+    ("LION", "Cowardly Lion"),
+    ("WIZD", "Wizard (Oz)"),  # verify
+    ("WWOW", "Wicked Witch of the West"),
+    ("GLND", "Glinda"),
+    ("TOTO", "Toto (Oz)"),
+ 
+    # --- Hunchback of Notre Dame ---
+    ("FROL", "Claude Frollo"),
+    ("ESME", "Esmeralda (The Hunchback of Notre-Dame)"),  # verify
+ 
+    # --- Alice in Wonderland / Looking-Glass ---
+    ("JABB", "Jabberwocky"),
+    ("TWDL", "Tweedledum and Tweedledee"),
+    ("HUMP", "Humpty Dumpty"),
+ 
+    # --- Jekyll & Hyde ---
+    ("JEKL", "Strange Case of Dr Jekyll and Mr Hyde"),
+ 
+    # --- Cthulhu Mythos ---
+    ("CTHU", "Cthulhu"),
+    ("NYAR", "Nyarlathotep"),
+    ("AZTH", "Azathoth"),
+ 
+    # --- Greek mythology ---
+    ("HRCL", "Heracles"),
+    ("ZEUS", "Zeus"),
+    ("HERA", "Hera"),
+    ("PERS", "Persephone"),
+    ("HELN", "Helen of Troy"),
+    ("ARES", "Ares"),
+    ("ODYS", "Odysseus"),
+    ("ATHN", "Athena"),
+    ("APOL", "Apollo"),
+    ("ARTM", "Artemis"),
+    ("POSE", "Poseidon"),
+    ("HADE", "Hades"),
+    ("APHR", "Aphrodite"),
+    ("HRMS", "Hermes"),
+    ("DION", "Dionysus"),
+    ("ACHL", "Achilles"),
+    ("PRSU", "Perseus"),
+    ("MEDU", "Medusa"),
+    ("THES", "Theseus"),
+    ("MINO", "Minotaur"),
+    ("PAND", "Pandora"),
+    ("PROM", "Prometheus"),
+    ("ORPH", "Orpheus"),
+ 
+    # --- American folklore ---
+    ("BUNY", "Paul Bunyan"),
+    ("BABE", "Babe the Blue Ox"),
+ 
+    # --- Treasure Island ---
+    ("LJSL", "Long John Silver"),
+    ("JIMH", "Jim Hawkins"),
+ 
+    # --- Jules Verne ---
+    ("NEMO", "Captain Nemo"),
+ 
+    # --- Arthurian legend ---
+    ("ARTH", "King Arthur"),
+    ("CAML", "Camelot"),
+    ("GUIN", "Guinevere"),
+    ("GLHD", "Galahad"),
+    ("LNCL", "Lancelot"),
+    ("MERL", "Merlin"),
+    ("MORG", "Morgan le Fay"),
+    ("MRDR", "Mordred"),
+    ("GAWN", "Gawain"),
+ 
+    # --- Adventure heroes ---
+    ("QUAT", "Allan Quatermain"),
+    ("SNBD", "Sinbad the Sailor"),
+ 
+    # --- Sleepy Hollow ---
+    ("HDLS", "Headless Horseman"),
+    ("ICHA", "Ichabod Crane"),
+ 
+    # --- Arabian Nights ---
+    ("ALAD", "Aladdin"),
+    ("ALBB", "Ali Baba"),
+    ("SCHE", "Scheherazade"),
+ 
+    # --- Beowulf ---
+    ("BEOW", "Beowulf (hero)"),
+    ("GREN", "Grendel"),
+    ("GRMO", "Grendel's mother"),
+    ("HROT", "Hrothgar"),
+ 
+    # --- Wilde / Swift ---
+    ("DGRY", "Dorian Gray"),  # verify
+    ("GULV", "Lemuel Gulliver"),
+ 
+    # --- Mark Twain ---
+    ("HUCK", "Huckleberry Finn"),
+    ("TSWY", "Tom Sawyer"),
+    ("BECK", "Becky Thatcher"),
+ 
+    # --- The Three Musketeers ---
+    ("DART", "D'Artagnan"),
+    ("ATHO", "Athos (musketeer)"),  # verify
+    ("PORT", "Porthos"),  # verify
+    ("ARAM", "Aramis"),  # verify
+    ("MILA", "Milady de Winter"),
+ 
+    # --- Folklore & fairy tales ---
+    ("NESS", "Loch Ness Monster"),
+    ("LRRH", "Little Red Riding Hood"),
+    ("BBWF", "Big Bad Wolf"),
+    ("RAPU", "Rapunzel"),
+    ("WRWF", "Werewolf"),
+    ("PIPR", "Pied Piper of Hamelin"),
+    ("MUMY", "Mummy"),
+    ("GEPP", "Geppetto"),
+ 
+    # --- Norse mythology ---
+    ("THOR", "Thor"),
+    ("ODIN", "Odin"),
+    ("FREY", "Freyja"),
+    ("LOKI", "Loki"),
+    ("FRGG", "Frigg"),
+    ("BALD", "Baldr"),
+    ("HEIM", "Heimdallr"),
+    ("FENR", "Fenrir"),
+ 
+    # --- H.G. Wells ---
+    ("TMCH", "The Time Machine"),
+    ("MORL", "Morlock"),
+ 
+    # --- Death ---
+    ("DEAT", "Death (personification)"),
+    ("GRIM", "Grim Reaper"),
+ 
+    # --- Bible ---
+    ("DAVD", "David"),
+    ("GOLI", "Goliath"),
+    ("JESU", "Jesus"),
+    ("MOSE", "Moses"),
+    ("NOAH", "Noah"),
+    ("ADAM", "Adam"),
+    ("EVEE", "Eve"),
+    ("CAIN", "Cain"),
+    ("SMSN", "Samson"),
+    ("SOLO", "Solomon"),
+    ("SATN", "Satan"),
+    ("JUDS", "Judas Iscariot"),
+    ("JONA", "Jonah"),
+ 
+    # --- Shakespeare ---
+    ("ROME", "Romeo Montague"),
+    ("JULI", "Juliet Capulet"),
+    ("MERC", "Mercutio"),
+    ("TYBL", "Tybalt"),
+    ("HAML", "Prince Hamlet"),  # verify
+    ("OPHE", "Ophelia"),
+ 
+    # --- Faust ---
+    ("FAUS", "Faust"),
+    ("MEPH", "Mephistopheles"),
+ 
+    # --- A Christmas Carol ---
+    ("BCRT", "Bob Cratchit"),
+    ("TTIM", "Tiny Tim"),
+    ("MRLY", "Jacob Marley"),
 ]
 
 
