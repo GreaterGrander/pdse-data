@@ -233,7 +233,6 @@ CHARACTERS = [
     # --- Bible ---
     ("DAVD", "David"),
     ("GOLI", "Goliath"),
-    ("JESU", "Jesus"),
     ("MOSE", "Moses"),
     ("NOAH", "Noah"),
     ("ADAM", "Adam"),
